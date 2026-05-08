@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  ionclaw-server:
+    build: .
+    container_name: ionclaw-devduo
+    restart: unless-stopped
+    user: "1000:1000"  # Run as non-root (fix permission issues)
+    ports:
+      - "8080:8080"
+    volumes:
+      # Persist data - mapped to local paths (no /data system path)
+      - ./data/project:/app/data/project
+      - ./models:/app/models
+      - ./sandbox:/app/sandbox
+      - ./logs:/app/logs
+      - ./.env:/app/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - PROJECT_PATH=/app/data/project
+      - AI_MODEL_PATH=/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ionclaw-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - ionclaw-net
+    depends_on:
+      - ionclaw-server
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./monitoring/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=ionclaw123
+    networks:
+      - ionclaw-net
+    depends_on:
+      - prometheus
+
+networks:
+  ionclaw-net:
+    driver: bridge

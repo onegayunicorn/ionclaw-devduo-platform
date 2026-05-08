@@ -1,18 +1,40 @@
 {
-  "name": "ionclaw-devduo-mono",
-  "version": "1.0.0",
-  "description": "Integrated system: IonClaw Server + DevDuo AI + Orchestrator + Entanglement Twins",
-  "main": "index.js",
+  "name": "ionclaw-devduo-platform",
+  "version": "2.0.0",
+  "description": "IonClaw + DevDuo Integrated Platform | Server + AI + Orchestrator + Portal",
+  "main": "ionclaw-server/index.js",
   "scripts": {
-    "start-server": "node ionclaw-server/index.js",
-    "start-cli": "node terminal-cli/cli.js",
-    "orchestrate": "node orchestrator/orchestrator.js",
-    "build": "docker-compose build",
-    "up": "docker-compose up -d",
-    "down": "docker-compose down"
+    "start": "node ionclaw-server/index.js",
+    "start:dev": "nodemon ionclaw-server/index.js",
+    "stop": "pkill -f node || true",
+    "fix-port": "bash ./scripts/fix-port-conflict.sh",
+    "init:system": "bash ./scripts/initialize-system.sh",
+    "test": "node evaluation-suite/tester.js",
+    "simulate": "node simulation-engine/scenarios/complete-lifecycle.js",
+    "health-check": "node scripts/health-check.js",
+    "deploy:prod": "bash ./scripts/deploy-production.sh",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "logs": "tail -f ./logs/app.log"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "fs-extra": "^11.2.0"
+    "cors": "^2.8.5",
+    "fs-extra": "^11.2.0",
+    "swagger-ui-express": "^5.0.0",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.7.0",
+    "dotenv": "^16.4.5",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onegayunicorn/ionclaw-devduo-platform.git"
   }
 }

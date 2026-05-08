@@ -1,0 +1,58 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "IonClaw DevDuo Platform API",
+    "version": "2.0.0",
+    "description": "API for IonClaw Server + DevDuo AI Engine"
+  },
+  "paths": {
+    "/api/status": {
+      "get": {
+        "summary": "Get system status",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/api/project/initialize": {
+      "post": {
+        "summary": "Initialize project structure",
+        "responses": {
+          "200": { "description": "Project initialized" }
+        }
+      }
+    },
+    "/api/ai/init": {
+      "post": {
+        "summary": "Initialize AI engine",
+        "parameters": [
+          { "name": "model", "in": "query", "schema": { "type": "string", "default": "LITE" } }
+        ],
+        "responses": {
+          "200": { "description": "AI engine ready" }
+        }
+      }
+    },
+    "/api/ai/generate": {
+      "post": {
+        "summary": "Generate code using AI",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": { "type": "string" },
+                  "maxTokens": { "type": "integer", "default": 1024 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Code generated" }
+        }
+      }
+    }
+  }
+}
