@@ -1,0 +1,11 @@
+{
+  "sandboxMode": true,
+  "projectPath": "./sandbox/project",
+  "mockEndpoints": {
+    "LOCAL": "http://sandbox.local:8080",
+    "LAN": "http://sandbox.lan:8080",
+    "MOBILE": "http://sandbox.mobile:8080"
+  },
+  "aiMock": true,
+  "noOverwrite": true
+}

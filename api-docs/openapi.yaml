@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: IonClaw + DevDuo API
+  version: 2.0.0
+  description: Unified API for project management, server control, AI engine, and state orchestration
+servers:
+  - url: http://localhost:8080/api
+    description: Local Server
+  - url: http://192.168.1.108:8080/api
+    description: LAN Server
+paths:
+  /status:
+    get:
+      summary: Get full system status
+      responses:
+        200:
+          description: System state from Entanglement Twin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemState'
+
+  /project/initialize:
+    post:
+      summary: Initialize project structure (no overwrite)
+      responses:
+        200:
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+
+  /server/start:
+    post:
+      summary: Start IonClaw server
+      responses:
+        200:
+          description: Server running
+
+  /server/stop:
+    post:
+      summary: Stop IonClaw server
+      responses:
+        200:
+          description: Server stopped
+
+  /ai/init:
+    post:
+      summary: Initialize DevDuo AI model
+      parameters:
+        - name: model
+          in: query
+          schema:
+            type: string
+            enum: [LITE, HIGH_POWER]
+      responses:
+        200:
+          description: AI engine ready
+
+  /ai/generate:
+    post:
+      summary: Generate code/text via AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateRequest'
+      responses:
+        200:
+          description: Generated output
+
+  /metrics:
+    get:
+      summary: Get performance metrics (RAM, tokens, uptime)
+      responses:
+        200:
+          description: System metrics
+
+components:
+  schemas:
+    SystemState:
+      type: object
+      properties:
+        ionclaw: {type: object, properties: {running: boolean, projectPath: string}}
+        devduo: {type: object, properties: {ready: boolean, model: string, tokenLimit: number}}
+        network: {type: object, properties: {endpoints: object}}
+        metrics: {type: object, properties: {ramUsage: string, uptime: number, tokensUsed: number}}
+    ProjectResponse:
+      type: object
+      properties:
+        status: string
+        path: string
+    GenerateRequest:
+      type: object
+      properties:
+        prompt: string
+        maxTokens: number

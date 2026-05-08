@@ -1,0 +1,18 @@
+{
+  "name": "ionclaw-devduo-mono",
+  "version": "1.0.0",
+  "description": "Integrated system: IonClaw Server + DevDuo AI + Orchestrator + Entanglement Twins",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "node ionclaw-server/index.js",
+    "start-cli": "node terminal-cli/cli.js",
+    "orchestrate": "node orchestrator/orchestrator.js",
+    "build": "docker-compose build",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0"
+  }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IonClaw DevDuo Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-6">
+  <h1 class="text-3xl font-bold mb-6">⚡ IonClaw + DevDuo Control Portal</h1>
+
+  <!-- Status Panel -->
+  <div id="status-panel" class="bg-gray-800 p-4 rounded mb-4">
+    <h3 class="text-xl">System Status</h3>
+    <p>IonClaw Server: <span id="server-status" class="text-red-400">Stopped</span></p>
+    <p>DevDuo AI: <span id="ai-status" class="text-yellow-400">Not Initialized</span></p>
+    <p>Active Endpoint: <span id="endpoint">http://localhost:8080</span></p>
+  </div>
+
+  <!-- Control Buttons -->
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <button id="btn-start" class="bg-green-600 p-3 rounded">▶ Start All Services</button>
+    <button id="btn-stop" class="bg-red-600 p-3 rounded">⏹ Stop All Services</button>
+    <button id="btn-init" class="bg-blue-600 p-3 rounded">📁 Initialize Project</button>
+    <button id="btn-metrics" class="bg-purple-600 p-3 rounded">📊 View Metrics</button>
+  </div>
+
+  <!-- AI Generation -->
+  <div class="bg-gray-800 p-4 rounded mb-4">
+    <h3>🧠 DevDuo AI Generator</h3>
+    <textarea id="prompt" class="w-full bg-gray-700 p-2 rounded" rows="3" placeholder="Enter prompt..."></textarea>
+    <button id="btn-generate" class="bg-indigo-600 p-2 rounded mt-2">Generate</button>
+    <pre id="output" class="bg-gray-700 p-3 rounded mt-2 min-h-[100px]"></pre>
+  </div>
+
+  <!-- Metrics Display -->
+  <div id="metrics" class="bg-gray-800 p-4 rounded hidden">
+    <h3>📈 System Metrics</h3>
+    <ul id="metrics-list"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
